@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+:root {
+  --bg: transparent;
+  --card: #F5F0CE; /* ta couleur */
+  --text: #333;
+}
+
+body {
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.clock {
+  display: flex;
+  gap: 10px;
+}
+
+.flip {
+  background: var(--card);
+  color: var(--text);
+  font-size: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.flip.animate {
+  transform: rotateX(180deg);
+}
+</style>
+</head>
+
+<body>
+
+<div class="clock">
+  <div class="flip" id="h">00</div>
+  <div class="flip" id="m">00</div>
+  <div class="flip" id="s">00</div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+
+  update(document.getElementById("h"), now.getHours());
+  update(document.getElementById("m"), now.getMinutes());
+  update(document.getElementById("s"), now.getSeconds());
+}
+
+function update(el, value) {
+  value = String(value).padStart(2, '0');
+
+  if (el.textContent !== value) {
+    el.classList.add("animate");
+
+    setTimeout(() => {
+      el.textContent = value;
+      el.classList.remove("animate");
+    }, 150);
+  }
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
